@@ -18,7 +18,6 @@ import java.util.*
 
 internal class ArticleByWeekAdapter(
         ctx: Context,
-    //private val navController: NavController
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var context: Context? = null
@@ -37,15 +36,13 @@ internal class ArticleByWeekAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val articleViewHolder = holder as ArticleViewHolder
         articleViewHolder.bind(articles[position])
-
-
     }
 
     override fun getItemCount(): Int {
         return articles.size
     }
 
-    fun showArticles(articles: List<List<Article>>) {
+    fun showArticles(articles: MutableList<List<Article>>) {
         this.articles.addAll(articles)
         notifyDataSetChanged()
     }
@@ -63,7 +60,11 @@ internal class ArticleByWeekAdapter(
         fun bind(articles: List<Article>) {
             articleAdapter.showArticles(articles)
 
-            weekNo.text = getWeekNumber(articles[0].published)
+            if(articles.isNotEmpty()){
+                weekNo.text = articles[0].published.let { getWeekNumber(it) }
+            }else{
+                weekNo.text = ""
+            }
             articleAdapter.onItemClick = {
                 val bundle = Bundle().apply {
                     putString("ArticleUrl", it.url)

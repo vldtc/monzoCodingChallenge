@@ -1,5 +1,6 @@
 package com.monzo.androidtest.api.model
 
+import androidx.room.Entity
 import java.util.*
 
 data class ApiArticle(

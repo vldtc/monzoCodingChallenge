@@ -1,6 +1,8 @@
 package com.monzo.androidtest.articles.model
 
+import com.monzo.androidtest.api.model.ApiArticle
 import com.monzo.androidtest.api.model.ApiArticleListResponse
+import io.reactivex.Single
 import java.util.*
 
 class ArticleMapper {
@@ -34,5 +36,21 @@ class ArticleMapper {
         }
 
         return articles
+    }
+
+    fun mapSingleArticle(apiArticleResponse: ApiArticle): Article {
+        val fields = apiArticleResponse.fields
+
+        val thumbnail = fields?.thumbnail ?: ""
+        val headline = fields?.headline ?: ""
+        val sectionId = apiArticleResponse.sectionId ?: ""
+        val sectionName = apiArticleResponse.sectionName ?: ""
+        val webPublicationDate = apiArticleResponse.webPublicationDate
+        val apiUrl = apiArticleResponse.apiUrl ?: ""
+        val id = apiArticleResponse.id ?: ""
+
+        val article = Article(id, thumbnail, sectionId, sectionName, webPublicationDate, headline, apiUrl)
+
+        return article
     }
 }

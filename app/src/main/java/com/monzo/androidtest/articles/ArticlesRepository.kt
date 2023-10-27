@@ -15,7 +15,8 @@ class ArticlesRepository(
                 .map { articleMapper.map(it) }
     }
 
-    fun getArticle(articleUrl: String): Single<ApiArticle> {
+    fun getArticle(articleUrl: String): Single<Article> {
         return guardianService.getArticle(articleUrl, "main,body,headline,thumbnail")
+            .map { articleMapper.mapSingleArticle(it) }
     }
 }

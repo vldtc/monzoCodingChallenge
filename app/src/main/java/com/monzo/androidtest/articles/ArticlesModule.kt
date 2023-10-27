@@ -6,6 +6,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.monzo.androidtest.R
 import com.monzo.androidtest.api.GuardianService
+import com.monzo.androidtest.api.database.FavoritesDao
+import com.monzo.androidtest.api.database.GuardianDatabase
 import com.monzo.androidtest.articles.model.ArticleMapper
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
@@ -21,9 +23,10 @@ import java.util.*
 class ArticlesModule {
     @RequiresApi(Build.VERSION_CODES.N)
     fun inject(context: Context): ArticlesViewModel {
-        return ArticlesViewModel(ArticlesRepository(createGuardianService(context), ArticleMapper()))
+        return ArticlesViewModel(ArticlesRepository(createGuardianService(context), ArticleMapper()), favoritesDao(context))
     }
-
+    private fun favoritesDao(context: Context): FavoritesDao =
+        GuardianDatabase.getInstance(context).favoritesDAO()
     private fun createGuardianService(context: Context): GuardianService {
         val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
