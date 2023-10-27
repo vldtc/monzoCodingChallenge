@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_article_details" />
     <fragment
         android:id="@+id/articlesListFragment"
-        android:name="com.monzo.androidtest.api.article_list.ArticlesListFragment"
+        android:name="com.monzo.androidtest.fragments.article_list.ArticlesListFragment"
         android:label="fragment_articles_list"
         tools:layout="@layout/fragment_articles_list" >
         <action
